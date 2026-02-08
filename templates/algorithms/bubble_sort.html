@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort</title>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+<body class="app">
+    <div class="auth-message">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{category}}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    <div class="nav">
+        <div class="nav-items">
+            <div class="nav-header">
+                <h3>AlgoTeacher</h3>
+            </div>
+            <div class="nav-links">
+                <a href="{{url_for('dashboard')}}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+                <a href="{{url_for('settings')}}" class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}">Settings</a>
+            </div>
+            <div class="nav-footer">
+                <a href="{{url_for('logout')}}" class="nav-link danger">Logout</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="bubble-sort-main">
+        {% if not sorted_list %}
+        <div class="algorithm-description">
+            <h1>Bubble Sort</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil ad magnam voluptas cumque, tenetur itaque recusandae tempore, officiis quae minus possimus placeat neque aspernatur quo iusto libero aliquid, provident ratione?</p>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <p>Enter items</p>
+                    {{ form.items(class="input-field") }}
+                    {{ form.is_ascending}}
+                    {{ form.submit(class="button") }}
+                </form>
+        </div>
+        {% endif %}
+
+
+        {% if sorted_list %}
+            <div class="algorithm-explanation">
+                <div class="algorithm-explanation-container">
+                    <div class="visualiser">
+                        <h1>Bubble Sort</h1>
+                        <div class="bubble-sort-visualisation" id="array-container"> 
+                            <div class="bubble-sort-array">
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="explanation-section-card">
+                        <div class="explanation-section">
+
+                            <div class="steps-container" id="explanation-container">
+                            </div>
+                            <div class="step-container">
+                                <button type="button" class="button" id="prev-btn">Previous</button>
+                                <button type="button" class="button" id="next-btn">Next</button>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+    <script src="../../static/js/message-popup.js"></script>
+    {% if sorted_list %}
+    <script>
+        window.array_steps = {{ array_steps | tojson | safe }};
+        window.compare_indices = {{ compare_indices | tojson | safe }};
+        window.steps = {{ steps | tojson | safe }};
+    </script>
+        <script src="{{ url_for('static', filename='js/algorithms/bubble-sort.js') }}"></script>
+    {% endif %}
+</body>
+</html>

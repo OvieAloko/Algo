@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/index.css">
+    <title>Verify your email</title>
+</head>
+<body class="body">
+    <div class="card">
+        {% if status == "success" %}
+            <h2>Confirmation successful</h2>
+            <p>Your email was confirmed. Press the button to be redirected to the login page</p>
+            <a class="button" href="{{ url_for('login') }}">Go to login</a>
+            </div>
+        {% elif status == "expired" %}
+            <h2>Confirmation expired</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+                <p>The confirmation has expired</p>
+            <form method="POST" class="form-container">
+                {{ form.hidden_tag() }}
+                <div class="input-container">
+                    {{form.email(class="input-field")}}   
+                </div>
+                {{form.submit(class="button")}}
+            </form>
+        {% elif status == "invalid" %}
+            <div>
+                <h2>Confirmation invalid</h2>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <p>The confirmation is invalid</p>
+            <form method="POST" class="form-container">
+                {{ form.hidden_tag() }}
+                <div class="input-container">
+                    {{form.email(class="input-field")}}   
+                </div>
+                {{form.submit(class="button")}}
+            </form>
+            <div class="login-or-signup">
+                <a href="{{ url_for('signup') }}" class="login-or-signup">Sign up</a>
+                <a href="{{ url_for('login') }}" class="login-or-signup">Login</a>
+
+            </div>
+        {% elif status == "already-confirmed" %}#
+                <h2>Already confirmed</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <p class="confirmation-tag">Your email has already been confirmed. You can log in now.</p>
+
+                    <a class="button" href="{{ url_for('login') }}">Go to login</a>
+        {% endif %}
+    </div>
+    <script src="../static/js/message-popup.js"></script>
+</body>
+</html>

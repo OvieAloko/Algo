@@ -1,0 +1,6 @@
+.env
+sqlite3.exe
+.db
+instance
+.vscode
+__pycache__

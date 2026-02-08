@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/index.css">
+    <title>Sign Up</title>
+</head>
+<body class="body">
+    <div class="card">
+        <h2>Sign Up</h2>
+        <div class="auth-message">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{category}}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <form method="POST" action="" class="form-container">
+            {{ form.hidden_tag() }}
+            <div class="input-container">
+                {{ form.first_name(class="input-field") }}
+            </div>
+            <div class="input-container">
+                {{ form.last_name(class="input-field") }}
+            </div>
+            <div class="input-container">
+                {{ form.username(class="input-field") }}
+            </div>
+            <div class="input-container">
+                {{ form.email(class="input-field") }}
+            </div>
+            <div class="input-container">
+                {{ form.password(class="input-field") }}
+            </div>
+            <div class="input-container">
+                {{ form.confirm_password(class="input-field") }}
+            </div>
+            {{ form.submit(class="button") }}
+        </form>
+        
+        <a href="{{url_for('login')}}" class="login-or-signup">Login</a>
+    </div>
+    <script src="../static/js/message-popup.js"></script>
+</body>
+</html>
