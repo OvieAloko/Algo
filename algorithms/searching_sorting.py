@@ -24,7 +24,7 @@ class SortingSearching():
 
         for i in range(len(list2)):
             changes = False
-            for index in range(1, len(list2)):
+            for index in range(1, len(list2) - i):
                 temp = None
                 compare_indices.append((index-1, index))
 
@@ -56,3 +56,54 @@ class SortingSearching():
             if not changes:
                 break
         return list2, steps, array_versions, compare_indices   
+    
+    def binary_search(self):
+        steps = []
+        list2 = self.list1.copy()
+        array_versions = [list2.copy()]
+        compare_indices = [] 
+
+        top = len(list2)-1
+        bottom = 0
+        is_found = False
+
+        list2.sort()
+        steps.append("Binary search requires a sorted list, so we sort the list first.")
+        array_versions.append(list2.copy())
+        compare_indices.append([None, None, None])
+
+        while not is_found and top >= bottom:
+            middle = (top + bottom) // 2
+
+            steps.append(f"We check the middle value at index {middle}, which is {list2[middle]}")
+            compare_indices.append([bottom, top, middle])
+            array_versions.append(list2.copy())
+
+            if list2[middle] == self.item:
+                steps.append(f"Since the middle pointer {list2[middle]} is equal to {self.item}, we have found the item at index {middle}")
+                compare_indices.append([bottom, top, middle])
+                array_versions.append(list2.copy())
+                is_found = True
+
+            elif list2[middle] > self.item:
+                steps.append(f"Since {list2[middle]} is larger than {self.item}, we now search the left half of the list.")
+                top = middle - 1
+                compare_indices.append([bottom, top, None])
+                array_versions.append(list2.copy())
+
+            else:
+                steps.append(f"Since {list2[middle]} is less than {self.item}, we now search the right half of the list.")
+                bottom = middle + 1
+                compare_indices.append([bottom, top, None])
+                array_versions.append(list2.copy())
+
+
+
+        if not is_found:
+            steps.append(f"{self.item} is not in the list")
+            array_versions.append(list2.copy())
+            compare_indices.append([bottom, top, None])
+
+        return is_found, steps, array_versions, compare_indices, self.item
+
+            

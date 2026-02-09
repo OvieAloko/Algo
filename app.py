@@ -1,7 +1,7 @@
 import os
 from flask import Flask, redirect, render_template, url_for, request, session
-from algorithms.algorithms import bubble_sort_handler
-from algorithms.searching_sorting_forms import BubbleSortForm
+from algorithms.algorithms import binary_search_handler, bubble_sort_handler
+from algorithms.searching_sorting_forms import BubbleSortForm, BinarySearchForm
 from extensions import db, bcrypt, login_manager, mail
 from auth.forms import ChangeUsernameForm, ForgotPasswordEmailForm,SignUpForm, LoginForm, ChangeNameForm, ChangeEmailForm, PasswordValidationForm, ChangePasswordForm, AccountDeletionForm
 from auth.auth import reset_handler, sign_up_handler,pasword_reset_email_handler ,password_validation_handler, login_handler, account_deletion_handler, logout_handler, confirmation_handler, name_change_handler, username_change_handler, email_change_handler, password_change_handler
@@ -172,6 +172,21 @@ def bubble_sort():
         sorted_list, steps, array_steps, compare_indices = bubble_sort_handler(form)
 
     return render_template("algorithms/bubble_sort.html", form=form, sorted_list=sorted_list, steps=steps, array_steps=array_steps, compare_indices=compare_indices, enumerate=enumerate)
+
+@app.route("/algorithms/binarysearch", methods=["GET", "POST"])
+@login_required
+def binary_search():
+    form = BinarySearchForm()
+    is_found = None
+    steps = None
+    array_steps = None
+    compare_indices = None
+    item = None
+
+    if form.is_submitted():
+        is_found, steps, array_steps, compare_indices, item = binary_search_handler(form)
+
+    return render_template("algorithms/binary_search.html", form=form, is_found=is_found, steps=steps, array_steps=array_steps, compare_indices=compare_indices, item=item, enumerate=enumerate)
 
 if __name__ =='__main__':
     app.run(debug=True)

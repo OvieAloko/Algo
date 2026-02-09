@@ -35,34 +35,44 @@
         </div>
     </div>
     <div class="algorithm-main">
-        {% if not sorted_list %}
+        {% if is_found is none %}
         <div class="algorithm-description">
-            <h1>Bubble Sort</h1>
+            <h1>Binary Search</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil ad magnam voluptas cumque, tenetur itaque recusandae tempore, officiis quae minus possimus placeat neque aspernatur quo iusto libero aliquid, provident ratione?</p>
                 <form method="POST">
                     {{ form.hidden_tag() }}
                     <p>Enter items</p>
                     {{ form.items(class="input-field") }}
-                    <label class="checkbox-container">
-                        {{ form.is_ascending(class="checkbox-input") }}
-                        <span class="checkbox-custom"></span>
-                        <p>Ascending order</p>
-                    </label>
+                    {{ form.item(class="input-field") }}  
                     {{ form.submit(class="button") }}
                 </form>
         </div>
-        {% endif %}
-
-
-        {% if sorted_list %}
+        {% else %}
             <div class="algorithm-explanation">
                 <div class="algorithm-explanation-container">
                     <div class="visualiser">
-                        <h1>Bubble Sort</h1>
+                        <h1>Binary Search</h1>
                         <hr>
-                        <div class="bubble-sort-visualisation" id="array-container"> 
+                        <div class="binary-search-visualiser-container">
+                            <div class="binary-search-visualisation" id="array-container"> 
                             
+                            </div>
+                            <div class="binary-search-visualisation-footer">
+                                <div class="binary-search-labels">
+                                    <h3 id="bottom-pointer" class="binary-search-pointer">Bottom:</h3>
+                                </div>
+                                <div class="binary-search-labels">
+                                    <h3 id="middle-pointer" class="binary-search-pointer">Middle: </h3>
+                                </div>
+                                <div class="binary-search-labels">
+                                    <h3 id="top-pointer" class="binary-search-pointer">Top: </h3>
+                                </div>
+                                <div class="binary-search-labels">
+                                    <h3>Item: {{item}}</h3>
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
                     
 
@@ -81,16 +91,17 @@
             </div>
 
         {% endif %}
+        
     </div>
-    <script src="../../static/js/message-popup.js"></script>
-    <script src="../../static/js/toggle-nav.js"></script>
-    {% if sorted_list %}
+    {% if is_found is not none %}
     <script>
         window.array_steps = {{ array_steps | tojson | safe }};
         window.compare_indices = {{ compare_indices | tojson | safe }};
         window.steps = {{ steps | tojson | safe }};
     </script>
-        <script src="{{ url_for('static', filename='js/algorithms/bubble-sort.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/algorithms/binary-search.js') }}"></script>
     {% endif %}
+    <script src="../../static/js/message-popup.js"></script>
+    <script src="../../static/js/toggle-nav.js"></script>
 </body>
 </html>

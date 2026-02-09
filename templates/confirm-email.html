@@ -13,16 +13,16 @@
             <p>Your email was confirmed. Press the button to be redirected to the login page</p>
             <a class="button" href="{{ url_for('login') }}">Go to login</a>
             </div>
-        {% elif status == "expired" %}
-            <h2>Confirmation expired</h2>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert {{ category }}">
-                            <p>{{ message }}</p>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+            {% elif status == "expired" %}
+                <h2>Confirmation expired</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
             {% endwith %}
                 <p>The confirmation has expired</p>
             <form method="POST" class="form-container">

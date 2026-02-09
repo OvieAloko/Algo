@@ -8,44 +8,58 @@ const next_step = document.getElementById("next-btn");
 const previous_step = document.getElementById("prev-btn");
 const array_container = document.getElementById("array-container");
 const explanation_container = document.getElementById("explanation-container");
+const top_pointer = document.getElementById("top-pointer")
+const middle_pointer = document.getElementById("middle-pointer")
+const bottom_pointer = document.getElementById("bottom-pointer")
 
 const removed_arrays = [];
 const removed_explanations = [];
 
+function updateButtons() {
+    previous_step.disabled = current_step <= 0;
+    next_step.disabled = current_step >= steps.length - 1;
+}
 
 
 function show_step(step){
     const current_array = array_steps[step];
-    const compared_items = compare_indices[step] || [];
+    const [bottom, top, middle] = compare_indices[step] || [null, null, null];
 
     const previousExplanations = explanation_container.querySelectorAll(".current-explanation");
     previousExplanations.forEach(p => p.classList.remove("current-explanation"));
 
     const array = document.createElement("div");
-    array.classList.add("bubble-sort-array", "current-step");
+    array.classList.add("binary-search-array", "current-step");
 
     for (let i = 0; i < current_array.length; i++){
         let array_element = document.createElement("h2");
-        array_element.classList.add("bubble-sort-number");
+        array_element.classList.add("binary-search-number");
         array_element.innerText = current_array[i];
 
-        if (compared_items.includes(i)){
+        if (i === middle){
             array_element.classList.add("highlight");
+        }
+        else if (i === top || i === bottom){
+            array_element.classList.add("highlight-pointers");
+        }
+        else if ((i > top || i < bottom) && (top !== null && bottom !== null)){
+            array_element.classList.add("discarded")
         }
 
         array.appendChild(array_element);
     }
 
     array_container.appendChild(array);
+    
 
     array.offsetHeight;
     array.classList.add("show");
 
-    const all_steps = array_container.querySelectorAll(".bubble-sort-array");
+    const all_steps = array_container.querySelectorAll(".binary-search-array");
     for (let i = 0; i < all_steps.length - 1; i++){
         all_steps[i].classList.remove("current-step");
         for (let child of all_steps[i].children){
-            child.classList.remove("highlight");
+            child.classList.remove("highlight", "highlight-top", "highlight-bottom");
         }
     }
 
@@ -75,9 +89,11 @@ function show_step(step){
         explanation_container.removeChild(explanation_container.firstChild);
     }
 
-    previous_step.disabled = step === 0;
-    next_step.disabled = step === array_steps.length - 1;
+    updateButtons();
+    setLabels(step);
 }
+
+
 
 function delete_step(step){
     while (removed_arrays.length > 0 && array_container.scrollHeight < array_container.clientHeight) {
@@ -90,10 +106,10 @@ function delete_step(step){
         explanation_container.insertBefore(explanationToRestore, explanation_container.firstChild);
     }
 
-    previous_step.disabled = true;
-    next_step.disabled = true;
+    updateButtons();
+    setLabels(step);
 
-    const all_arrays = array_container.querySelectorAll(".bubble-sort-array");
+    const all_arrays = array_container.querySelectorAll(".binary-search-array");
     if (all_arrays.length) {
         const last_array = all_arrays[all_arrays.length - 1];
         last_array.classList.remove("show", "current-step");
@@ -102,18 +118,19 @@ function delete_step(step){
         setTimeout(() => {
             if (last_array.parentNode) last_array.parentNode.removeChild(last_array);
 
-            const all_arrays = array_container.querySelectorAll(".bubble-sort-array");
+            const all_arrays = array_container.querySelectorAll(".binary-search-array");
             if (all_arrays.length > 0) {
                 const last_array = all_arrays[all_arrays.length - 1];
-                const compared_items = compare_indices[current_step] || [];
+                const [bottom, top, middle] = compare_indices[current_step] || [];
 
                 last_array.classList.add("current-step");
                 for (let i = 0; i < last_array.children.length; i++) {
                     const child = last_array.children[i];
-                    if (compared_items.includes(i)) {
-                        child.classList.add("highlight");
-                    } else {
-                        child.classList.remove("highlight");
+                    if (middle === i){
+                        child.classList.add("highlight")
+                    }
+                    else if (i > top || i < bottom){
+                        child.classList.add("discarded")
                     }
                 }
             }
@@ -138,7 +155,7 @@ function delete_step(step){
                 }, 300);
             } else {
                 previous_step.disabled = step === 0;
-                next_step.disabled = step === array_steps.length - 1;
+                next_step.disabled = current_step >= array_steps.length - 1 || current_step >= steps.length - 1;
             }
         }, 300);
     }
@@ -147,17 +164,56 @@ function delete_step(step){
 
 
 previous_step.addEventListener("click", () => {
-    if (current_step > 0){
-        current_step--;
+    let prev = current_step - 1;
+
+    while (prev >= 0 && !array_steps[prev]) {
+        prev--;
+    }
+
+    if (prev >= 0){
+        current_step = prev;
         delete_step(current_step);
     }
 })
 
 next_step.addEventListener("click", () => {
-    if (current_step < array_steps.length -1 ){
-        current_step++;
+    let next = current_step + 1;
+
+    while (next < array_steps.length && !array_steps[next]) {
+        next++;
+    }
+
+    if (next < array_steps.length ){
+        current_step = next;
         show_step(current_step);
     }
 })
 
+function animatePointer(pointer, text) {
+    if (pointer.innerText === text) return;
+
+    pointer.classList.remove("animate");
+    pointer.offsetHeight;
+    pointer.innerText = text;
+    pointer.classList.add("animate");
+}
+
+function setLabels(step){
+    const current_array = array_steps[step];
+    const [bottom, top, middle] = compare_indices[step] || [null, null, null];
+
+    if (top !== null) {
+        animatePointer(top_pointer, "Top: " + current_array[top]);
+    }
+
+    if (bottom !== null) {
+        animatePointer(bottom_pointer, "Bottom: " + current_array[bottom]);
+    }
+
+    if (middle !== null) {
+        animatePointer(middle_pointer, "Middle: " + current_array[middle]);
+    }
+}
+
 show_step(current_step);
+setLabels(current_step);

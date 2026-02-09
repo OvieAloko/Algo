@@ -10,7 +10,8 @@
     <div class="nav">
         <div class="nav-items">
             <div class="nav-header">
-                <h3>AlgoTeacher</h3>
+                <h3>Algo</h3>
+                <button id="navToggle" class="nav-toggle">☰</button>
             </div>
             <div class="nav-links">
                 <a href="{{url_for('dashboard')}}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
@@ -206,5 +207,6 @@
     
     <script src="../static/js/message-popup.js"></script>
     <script src="../static/js/card-popup.js"></script>
+    <script src="../static/js/toggle-nav.js"></script>
 </body>
 </html>

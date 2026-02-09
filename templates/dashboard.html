@@ -10,7 +10,8 @@
     <div class="nav">
         <div class="nav-items">
             <div class="nav-header">
-                <h3>AlgoTeacher</h3>
+                <h3>Algo</h3>
+                <button id="navToggle" class="nav-toggle">☰</button>
             </div>
             <div class="nav-links">
                 <a href="{{url_for('dashboard')}}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
@@ -23,8 +24,19 @@
         </div>
     </div>
     <div class="dash-main">
-        <h1>Dashboard</h1>
+        <div class="dash-header">
+            <div class="dash-title">
+                <h1>Algorithms</h1>
+            </div>
+            <hr>
+        </div>
+        <div class="algorithm-carousel">
+               
+        </div>
         <a href="{{ url_for('bubble_sort') }}">Bubble Sort</a>
+        <a href="{{ url_for('binary_search') }}">Binary Search<a>
     </div>
+    <script src="../static/js/toggle-nav.js"></script>
+
 </body>
 </html>
