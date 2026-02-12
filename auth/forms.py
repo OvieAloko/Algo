@@ -33,7 +33,7 @@ class SignUpForm(FlaskForm):
         except EmailNotValidError as e:
             raise ValidationError(str(e))
 
-        existing_user_email = User.query.filter_by(email=email.data).first()
+        existing_user_email = User.query.filter_by(email=new_email).first()
 
         if existing_user_email:
             raise ValidationError("That email already exists please try another one.")

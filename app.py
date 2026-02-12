@@ -6,8 +6,10 @@ from extensions import db, bcrypt, login_manager, mail
 from auth.forms import ChangeUsernameForm, ForgotPasswordEmailForm,SignUpForm, LoginForm, ChangeNameForm, ChangeEmailForm, PasswordValidationForm, ChangePasswordForm, AccountDeletionForm
 from auth.auth import reset_handler, sign_up_handler,pasword_reset_email_handler ,password_validation_handler, login_handler, account_deletion_handler, logout_handler, confirmation_handler, name_change_handler, username_change_handler, email_change_handler, password_change_handler
 from models.user import User
+from models.algorithm import Algorithm
 from flask_login import current_user, login_required
 from dotenv import load_dotenv
+from algorithms.add_algorithm import add_algorithm
 
 
 app = Flask(__name__)
@@ -46,7 +48,8 @@ def home():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    algorithms = Algorithm.query.all()
+    return render_template("dashboard.html", algorithms = algorithms)
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -58,7 +61,7 @@ def logout():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.confirmed:
         return redirect(url_for("dashboard"))
 
     form = LoginForm()
@@ -128,6 +131,11 @@ def settings():
     username_form.username.data = current_user.username
     return render_template('settings.html', account_deletion_form = account_deletion_form,name_form=name_form, username_form=username_form, email_form = email_form, password_validation_form = password_validation_form, is_validated= is_validated, change_password_form=change_password_form)
 
+@app.route('/test', methods=['GET', 'POST'])
+@login_required
+def test():
+    return render_template("test.html")
+
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot_password():
     form = ForgotPasswordEmailForm()
@@ -146,7 +154,7 @@ def confirm_email(token):
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.confirmed:
         return redirect(url_for("dashboard"))
 
     form = SignUpForm()
@@ -189,4 +197,4 @@ def binary_search():
     return render_template("algorithms/binary_search.html", form=form, is_found=is_found, steps=steps, array_steps=array_steps, compare_indices=compare_indices, item=item, enumerate=enumerate)
 
 if __name__ =='__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

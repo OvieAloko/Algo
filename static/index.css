@@ -360,6 +360,7 @@ button {
     min-width: 0;
     transition: all 0.3s ease;
     margin: 10px;
+    min-height: 0;
 }
 
 
@@ -400,7 +401,7 @@ button {
     border: none;
     border-radius: 20px;
     transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, border 0.2s ease;
-    padding: 8px;
+    padding: 8px 12px 8px 12px;
 }
 
 .nav-toggle:hover {
@@ -586,6 +587,13 @@ button {
 
 .button:active{
     transform: translateX(2px) scale(0.98);
+}
+
+.algorithm-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 .algorithm-main{
@@ -909,8 +917,156 @@ button {
     flex-shrink: 0;
 }
 
-.algorithm-carousel {
+
+.algorithms-top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button.sort{
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+}
+
+.algorithms-wrapper {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     min-height: 0;
+}
+
+.algorithm-grid {
+    flex: 1;
     overflow-y: auto;
+    padding: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+
+    min-height: 0;
+}
+
+.algo-card {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--color-primary-700);
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out, border 0.1s ease-in-out;
+    border: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 20px;
+}
+
+.algo-card:hover {
+    transform: scale(1.075);
+    height: fit-content;
+}
+
+.algo-description {
+    display: none;
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 10px;
+    color: var(--color-primary-100);
+    font-weight: 400;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.algo-card:hover .algo-description {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.algo-card:active{
+    transform: translateX(2px) scale(0.98);
+    border: 3px solid rgba(255,255,255,0.05);
+}
+
+
+.algo-image {
+    flex: 0 0 140px;
+    width: 100%;
+    background: #000;
+    filter: blur(3px);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: filter 0.2s ease-in-out;
+}
+
+
+.algo-card:hover .algo-image{
+    filter: blur(0);
+}
+
+
+.algo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border: 1px solid rgba(255,255,255,0.05);
+
+}
+
+.algo-title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+
+}
+
+
+.simplex-algorithm{
+    margin-top: 10px;
+}
+
+.simplex-tableau{
+    width: 100%;
+    background-color: var(--color-primary-800);
+    color: var(--color-primary-100);
+    table-layout: fixed;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+}
+
+
+.simplex-tableau-item{
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.simplex-tableau-item.header{
+    color: var(--color-button-text);
+    font-weight: 600;
+
+}
+
+.simplex-tableau-row.selected{
+    background-color: var(--color-accent);
+    transform: scale(1.02);
+}
+
+.simplex-tableau-row.selected td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.simplex-tableau-row.selected td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }

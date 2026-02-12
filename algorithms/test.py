@@ -1,3 +1,20 @@
+def parse_values(items):
+    raw_values = items.split(',')
+    
+    for i in range(len(raw_values)):
+        raw_values[i] = raw_values[i].strip()
+
+        try:
+            if float(raw_values[i]) % 1 == 0:
+                raw_values[i] = int(raw_values[i])
+            else:
+                raw_values[i] = float(raw_values[i])
+        except:
+            pass
+    
+    return raw_values
+
+
 class SortingSearching():
     def __init__(self, is_ascending, item, list1):
         self.is_ascending = is_ascending
@@ -107,3 +124,6 @@ class SortingSearching():
         return is_found, steps, array_versions, compare_indices, self.item
 
             
+
+
+sorting_searching = SortingSearching(parse_values("cat, meow, bread, milk"))

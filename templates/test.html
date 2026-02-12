@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort</title>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+<body class="app">
+    <div class="auth-message">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{category}}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    <div class="nav">
+        <div class="nav-items">
+            <div class="nav-header">
+                <h3>Algo</h3>
+                <button id="navToggle" class="nav-toggle">☰</button>
+            </div>
+            <div class="nav-links">
+                <a href="{{url_for('dashboard')}}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+                <a href="{{url_for('settings')}}" class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}">Settings</a>
+            </div>
+            <div class="nav-footer">
+                <a href="{{url_for('logout')}}" class="nav-link danger">Logout</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="algorithm-main">
+            <div class="algorithm-explanation">
+                <div class="algorithm-explanation-container">
+                    <div class="visualiser">
+                        <h1>Simplex Algorithm</h1>
+                        <hr>
+                        <div class="simplex-algorithm">
+                            <table class="simplex-tableau">
+                                <tr class="simplex-tableau-row">
+                                    <th class="simplex-tableau-item header" ></th>
+                                    <th class="simplex-tableau-item header" >x</th>
+                                    <th class="simplex-tableau-item header" >y</th>
+                                    <th class="simplex-tableau-item header" >z</th>
+                                    <th class="simplex-tableau-item header" >s1</th>
+                                    <th class="simplex-tableau-item header" >s2</th>
+                                    <th class="simplex-tableau-item header" >s3</th>
+                                    <th class="simplex-tableau-item header" >Value</th>
+                                </tr>
+                                <tr class="simplex-tableau-row selected">
+                                    <th class="simplex-tableau-item header" >s1</th>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                </tr>
+                                <tr class="simplex-tableau-row">
+                                    <th class="simplex-tableau-item header" >s2</th>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                </tr>
+                                <tr>
+                                    <th class="simplex-tableau-item header" >s3</th>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                </tr>
+                                <tr>
+                                    <th class="simplex-tableau-item header" >P</th>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                    <td class="simplex-tableau-item" >9</td>
+                                </tr>
+                            </table>
+                        </div>   
+                    </div>
+                    <div class="explanation-section-card">
+                        <div class="explanation-section">
+
+                            <div class="steps-container" id="explanation-container">
+                            </div>
+                            <div class="step-container">
+                                <button type="button" class="button" id="prev-btn">Previous</button>
+                                <button type="button" class="button" id="next-btn">Next</button>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>        
+    </div>
+    <script src="{{ url_for('static', filename='js/algorithms/binary-search.js') }}"></script>
+    <script src="../../static/js/message-popup.js"></script>
+    <script src="../../static/js/toggle-nav.js"></script>
+</body>
+</html>

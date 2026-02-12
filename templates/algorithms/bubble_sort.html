@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubble Sort</title>
     <link rel="stylesheet" href="../static/index.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body class="app">
     <div class="auth-message">
@@ -38,7 +39,7 @@
         {% if not sorted_list %}
         <div class="algorithm-description">
             <h1>Bubble Sort</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil ad magnam voluptas cumque, tenetur itaque recusandae tempore, officiis quae minus possimus placeat neque aspernatur quo iusto libero aliquid, provident ratione?</p>
+            <p><br>“The simplest sorting algorithm” (Geek for Geeks bubble sort algorithm ). It works by swapping items in an array one by one (if they are not in order) through passes until the list is sorted. Once a pass is performed with no changes, the list is sorted.<br><br>The time complexity is \(O(n^2)\) . This is because a list has a maximum of n passes and in each pass there are a maximum of n comparisons. \(n\times n = n^2\).<br><br> In this tutorial you will see a demonstration of bubble sort and you will the condition which needs to be satisfied in order for two items to be swapped. I will come back and finish this definition later. <br><br> Enter comma separated values into the input field below and you can be taught this tutorial with those values. Two valid examples are 9,2,66,3 or John,Tom,Dom <br><br>  </p>
                 <form method="POST">
                     {{ form.hidden_tag() }}
                     <p>Enter items</p>

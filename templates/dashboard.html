@@ -16,6 +16,7 @@
             <div class="nav-links">
                 <a href="{{url_for('dashboard')}}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
                 <a href="{{url_for('settings')}}" class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}">Settings</a>
+                <a href="{{url_for('test')}}" class="nav-link {% if request.endpoint == 'test' %}active{% endif %}">test</a>
             </div>
             <div class="nav-footer">
                 <a href="{{url_for('logout')}}" class="nav-link danger">Logout</a>
@@ -26,15 +27,30 @@
     <div class="dash-main">
         <div class="dash-header">
             <div class="dash-title">
-                <h1>Algorithms</h1>
+                <h1>Dashboard</h1>
             </div>
             <hr>
         </div>
-        <div class="algorithm-carousel">
-               
+        <div class="algorithm-wrapper">
+            <div class="algorithms-top">
+                <h2>Algorithms</h2>
+                <button class="button sort">Filters</button>
+            </div>
+            
+            <div class="algorithm-grid">
+                {% for algorithm in algorithms %}
+                <a class="algo-card" href="{{ url_for(algorithm.url_for) }}">
+                    <div class="algo-image">
+                        <img src="{{algorithm.image_location}}" alt="{{algorithm.name}}">
+                    </div>
+                    <div class="algo-title">
+                        <h4>{{algorithm.name}}</h4>
+                        <p class="algo-description">{{ algorithm.description }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
         </div>
-        <a href="{{ url_for('bubble_sort') }}">Bubble Sort</a>
-        <a href="{{ url_for('binary_search') }}">Binary Search<a>
     </div>
     <script src="../static/js/toggle-nav.js"></script>
 
